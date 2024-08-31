@@ -1,9 +1,8 @@
-// app/edit-task/[id]/page.js
 "use client";
 import { useRouter } from "next/navigation";
 import { useTasks } from "../../context/TaskContext";
 import { useEffect, useState } from "react";
-import { getLocationByCity } from "../../../../utils/locationAPI";
+import { getLocationByIP } from "../../../../utils/locationAPI";
 
 export default function EditTaskPage({ params }) {
     const { id } = params;
@@ -17,15 +16,15 @@ export default function EditTaskPage({ params }) {
       const taskToEdit = tasks.find(task => task.id === parseInt(id));
       if (taskToEdit) {
         setTask(taskToEdit);
-        fetchLocationData(taskToEdit.city); // Fetch location data using the city name
+        fetchLocationData(); // Fetch location data based on IP address
       } else {
         router.push('/'); // Redirect if task not found
       }
     }, [id, tasks, router]);
   
-    const fetchLocationData = async (cityName) => {
+    const fetchLocationData = async () => {
       try {
-        const locationData = await getLocationByCity(cityName);
+        const locationData = await getLocationByIP(); // Fetch location data based on IP address
         setLocation(locationData);
         setError(null); // Clear any previous errors
       } catch (error) {
@@ -95,4 +94,3 @@ export default function EditTaskPage({ params }) {
       </div>
     );
   }
-  

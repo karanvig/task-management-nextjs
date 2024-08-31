@@ -1,8 +1,9 @@
+// app/add-task/page.js
 "use client";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTasks } from "../context/TaskContext";
-import { getLocationByCity } from "../../../utils/locationAPI"; // Ensure the correct import path
+import { getLocationByIP } from "../../../utils/locationAPI"; // Ensure the correct import path
 
 export default function AddTaskPage() {
   const { addTask } = useTasks();
@@ -17,7 +18,7 @@ export default function AddTaskPage() {
     const fetchInitialLocation = async () => {
       setLoading(true);
       try {
-        const locationData = await getLocationByCity(""); // You can set a default city if needed
+        const locationData = await getLocationByIP(); // Fetch location data using IP
         setLocation(locationData);
         setError(null);
       } catch (error) {
