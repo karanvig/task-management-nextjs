@@ -8,7 +8,6 @@ export async function getLocationByIP(ipAddress) {
   }
 
   const data = await response.json();
-  console.log(data);
 
   // Extract location information
   const location = data;
