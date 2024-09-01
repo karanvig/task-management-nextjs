@@ -1,6 +1,6 @@
 // utils/ipApi.js
-export async function getLocationByIP(ipAddress) {
-  const apiKey = process.env.NEXT_PUBLIC_LOCATION_API_KEY; // Replace with your actual Geoapify API key
+export async function getLocationByIP() {
+  const apiKey = process.env.NEXT_PUBLIC_LOCATION_API_KEY; 
   const response = await fetch(`https://api.geoapify.com/v1/ipinfo?apiKey=${apiKey}`);
 
   if (!response.ok) {
