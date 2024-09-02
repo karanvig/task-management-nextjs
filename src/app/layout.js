@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white dark:bg-black text-black dark:text-white`}>
+      <body className={`${inter.className}bg-gray-100 dark:bg-gray-900 text-black dark:text-white`}>
         <Sessionwrapper>
           <TaskProvider>
             <DarkModeToggle /> {/* Include DarkModeToggle */}

@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTasks } from "../context/TaskContext";
-import { getLocationByIP } from "../../../utils/locationAPI"; 
+import { getLocationByIP } from "../../../utils/locationAPI";
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 export default function AddTaskPage() {
   const { addTask } = useTasks();
@@ -14,11 +15,15 @@ export default function AddTaskPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLEMAP_API_KEY, // Ensure to add your API key here
+  });
+
   useEffect(() => {
     const fetchInitialLocation = async () => {
       setLoading(true);
       try {
-        const locationData = await getLocationByIP(); // Fetch location data using IP
+        const locationData = await getLocationByIP();
         setLocation(locationData);
         setError(null);
       } catch (error) {
@@ -42,11 +47,11 @@ export default function AddTaskPage() {
   const handleSave = () => {
     if (title && description) {
       const newTask = {
-        id: Date.now(), // Generate a unique ID for the new task
+        id: Date.now(),
         title,
         description,
-        city: location.city || "", // Use city name from location data
-        location
+        city: location.city || "",
+        location,
       };
       addTask(newTask);
       router.push('/');
@@ -84,6 +89,18 @@ export default function AddTaskPage() {
           <p>Country: {location.country}</p>
           <p>Latitude: {location.latitude}</p>
           <p>Longitude: {location.longitude}</p>
+
+          {isLoaded && (
+            <div className="mt-4">
+              <GoogleMap
+                mapContainerStyle={{ width: '100%', height: '300px' }}
+                center={{ lat: location.latitude, lng: location.longitude }}
+                zoom={12}
+              >
+                <Marker position={{ lat: location.latitude, lng: location.longitude }} />
+              </GoogleMap>
+            </div>
+          )}
         </div>
       )}
       {error && (

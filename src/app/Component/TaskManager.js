@@ -15,7 +15,7 @@ export default function TaskManager() {
   };
 
   return (
-    <div className="text-black dark:text-white bg-white dark:bg-black">
+    <div className="text-black dark:text-white bg-gray-100 dark:bg-gray-900">
       <button
         onClick={handleAddTask}
         className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mb-4"
